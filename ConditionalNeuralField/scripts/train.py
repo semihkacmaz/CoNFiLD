@@ -150,7 +150,8 @@ class trainer(object):
                 )
                 coord = [np.linspace(0, 1, i) for i in self.spatio_shape]
                 coord = np.stack(np.meshgrid(*coord, indexing="ij"), axis=-1)
-
+                
+            self.train_coord = torch.tensor(coord, dtype=torch.float32)
             ###### convert to tensor ######
             fois = (
                 torch.tensor(fois, dtype=torch.float32)
@@ -266,8 +267,15 @@ class trainer(object):
         coord: torch.Tensor,
         latents: torch.Tensor,
     ) -> torch.Tensor:
+        if coord is None:
+            print("Using default training query points")
+        coord = coord if coord is not None else self.train_coord
         coord = self.in_normalizer.normalize(coord)
-        out = self.nf(coord, latents)
+        if len(coord.shape) > 2:
+            latents = latents[:, None, None]
+        else:
+            latents = latents[:, None]
+        out = self.nf(coord.to(latents.device), latents)
         return self.out_normalizer.denormalize(out)
 
     def train(self, fix_nf = False):
@@ -495,7 +503,9 @@ class trainer(object):
             f"{self.hyper_para.save_path}/checkpoint_{checkpoint_id}.pt"
         )
         self.nf.load_state_dict(checkpoint["model_state_dict"])
-        
+
+        self.start_epoch = checkpoint["epoch"]
+
         if not siren_only:
             if hasattr(self, "N_samples"):
                 assert self.N_samples == checkpoint["hidden_states"]["latents"].shape[0]
@@ -509,13 +519,13 @@ class trainer(object):
             self.optim_dict = {
                 k: checkpoint[k] for k in ["optim_net_dec_dict", "optim_states_dict"]
             }
-        
+            
+            return self.nf, self.latents, self.optim_dict, checkpoint["epoch"]
+
         else:
             self.optim_dict = {}
             self.optim_dict["optim_net_dec_dict"] = checkpoint["optim_net_dec_dict"]
 
-        self.start_epoch = checkpoint["epoch"]
-        return self.nf, self.latents, self.optim_dict, checkpoint["epoch"]
 
 
 if __name__ == "__main__":

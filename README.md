@@ -1,4 +1,6 @@
 # CoNFILD
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14037782.svg)](https://doi.org/10.5281/zenodo.14037782)
+
 This is the codebase for the paper [Du, P., Parikh, M.H., Fan, X., Liu, X.Y. and Wang, J.X., 2024. CoNFiLD: Conditional Neural Field Latent Diffusion Model Generating Spatiotemporal Turbulence. arXiv preprint arXiv:2403.05940.](https://arxiv.org/abs/2403.05940) (Accepted in *Nature Communications*)
 
 <p align="center"><img src="figs/method.png" alt="structure" align="center" width="600px"></p>
@@ -18,49 +20,24 @@ create a conda environment named "CoNFiLD"
 3. install `pip` managed packages
     ```bash
     pip install -r requirements_pip.txt
-    ``` 
-## Training setup
+    ```
+## Using python Environment
 * Create a `.env` file in the CoNFiLD directory and copy the following settings within the file
     ```bash
     PYTHONPATH=./:UnconditionalDiffusionTraining_and_Generation:ConditionalNeuralField:$PYTHONPATH
-    CUDA_VISIBLE_DEVICES= #set your GPU number here
+    CUDA_VISIBLE_DEVICES= #set your GPU number(s) here
     ```
 
 * Run the following bash command
     ```bash
     set -o allexport && source .env && set +o allexport
     ```
-## Training Conditional Neural Field
-* Use `train.py` under `ConditionalNeuralField/scripts` directory
+## Generating Unconditional Samples
+* To generate unconditional samples, please run the `UnconditionalDiffusionTraining_and_Generation/scripts/inference.py` script
     ```bash
-    python ConditionalNeuralField/scripts/train.py PATH/TO/YOUR/xxx.yaml
+    python UnconditionalDiffusionTraining_and_Generation/scripts/inference.py PATH/TO/YOUR/xxx.yaml
     ```
-
-* To reproduce the results form the paper, download and add the corresponding case data in the `ConditionalNeuralField/data` directory use the `ConditionalNeuralField/training_recipes/case{1,2,3,4}.yml`
-
-    * The `ConditionalNeuralField/data` directory should be populated as follows
-        ```
-        data # all the input files for CNF
-        |
-        |-- data.npy # data to fit
-        | 
-        |-- coords.npy # query coordinates
-        ```
-## Training Diffusion Model
-* Use `train.py` under `UnconditionalDiffusionTraining_and_Generation/scripts` directory
-    ```bash
-    python UnconditionalDiffusionTraining_and_Generation/scripts/train.py
-    ```
-* To reproduce the results from the paper, download and add the corresponding case data in the `UnconditionalDiffusionTraining_and_Generation/data` and use the `UnconditionalDiffusionTraining_and_Generation/training_recipes/case{1,2,3,4}.yml`
-
-    * The `UnconditionalDiffusionTraining_and_Generation/data` directory should be populated as follows
-        ```
-        data # all the input files for diffusion model
-        |
-        |-- train_data.npy # training data
-        | 
-        |-- valid_data.npy # validation data
-        ```
+* Please refer to yaml files (particulary inference specific args) under `UnconditionalDiffusionTraining_and_Generation/training_recipes` for reproducing the paper's results
 ## Generating Conditional Samples
 * Here we provide the conditional generation script for Case4 random sensors case
     * For creating your arbitrary conditioning, please define your forward function in `ConditionalDiffusionGeneration/src/guided_diffusion/measurements.py`
@@ -98,32 +75,45 @@ create a conda environment named "CoNFiLD"
     |  |-- number of sensors
     |  |-- ...
     ```
+## Training Conditional Neural Field
+* Use `train.py` under `ConditionalNeuralField/scripts` directory
+    ```bash
+    python ConditionalNeuralField/scripts/train.py PATH/TO/YOUR/xxx.yaml
+    ```
+
+* To reproduce the results form the paper, download and add the corresponding case data in the `ConditionalNeuralField/data` directory use the `ConditionalNeuralField/training_recipes/case{1,2,3,4}.yml`
+
+    * The `ConditionalNeuralField/data` directory should be populated as follows
+        ```
+        data # all the input files for CNF
+        |
+        |-- data.npy # data to fit
+        | 
+        |-- coords.npy # query coordinates
+        ```
+## Training Diffusion Model
+* After the CNF is trained: 
+    * Process the latents into square images with dimensions of the square equal to the latent vector length
+    * Add a channel dimension after the batch dimension. The final shape should be $(B\: 1\: H\: W)$
+* Use `train.py` under `UnconditionalDiffusionTraining_and_Generation/scripts` directory
+    ```bash
+    python UnconditionalDiffusionTraining_and_Generation/scripts/train.py PATH/TO/YOUR/xxx.yaml
+    ```
+* To reproduce the results from the paper, download and add the corresponding case data in the `UnconditionalDiffusionTraining_and_Generation/data`
+    * Modify the `train_data_path` and `valid_data_path` in  `UnconditionalDiffusionTraining_and_Generation/training_recipes/case{1,2,3,4}.yml`
+
+    * The `UnconditionalDiffusionTraining_and_Generation/data` directory should be populated as follows
+    
+        ```
+        data # all the input files for diffusion model
+        |
+        |-- train_data.npy # training data
+        | 
+        |-- valid_data.npy # validation data
+        ```
 ## Download data & trained model
-* The data associated with this code can be downloaded from the [XXX]()
-* The data is organzied in the following manner
-    ```
-    | data 
-    |
-    |-- Cases
-    |  |
-    |  |-- Case1
-    |  |  |
-    |  |  |-- CNF_trainable_params.zip # Trainable params associated with CNF
-    |  |  |
-    |  |  |-- diffusion_trainable_params.zip # Trainable params associated with diffusion
-    |  |  |
-    |  |  |-- CNF_data.zip # Training data for CNF
-    |  |  |
-    |  |  |-- Diffusion_data.zip # Training data for diffusion
-    |  |
-    |  |-- Case{2,3} # same file structure as case 1
-    |  |
-    |  |-- Case4
-    |  |  |-- {same files as Case 1}
-    |  |  |
-    |  |  |-- Conditional_Generation_input.zip # Data required for Conditional Generation
-    |  |  |
-    ```
+* The data associated with this code can be downloaded [here](https://doi.org/10.5281/zenodo.14037782)
+* The trained model parameters associated with this code can be downloaded [here](https://zenodo.org/records/14058363)
 ## Issues?
 * If you have an issue in running the code please [raise an issue](https://github.com/jx-wang-s-group/CoNFiLD/issues)
 
