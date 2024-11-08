@@ -32,13 +32,20 @@ create a conda environment named "CoNFiLD"
     ```bash
     set -o allexport && source .env && set +o allexport
     ```
-## Generating Unconditional Samples
+  
+## Using pretrained CoNFiLD
+
+### Download pretrained model
+* The trained model parameters associated with this code can be downloaded [here](https://zenodo.org/records/14058363)
+
+### Generating Unconditional Samples
 * To generate unconditional samples, please run the `UnconditionalDiffusionTraining_and_Generation/scripts/inference.py` script
     ```bash
     python UnconditionalDiffusionTraining_and_Generation/scripts/inference.py PATH/TO/YOUR/xxx.yaml
     ```
 * Please refer to yaml files (particulary inference specific args) under `UnconditionalDiffusionTraining_and_Generation/training_recipes` for reproducing the paper's results
-## Generating Conditional Samples
+
+### Generating Conditional Samples
 * Here we provide the conditional generation script for Case4 random sensors case
     * For creating your arbitrary conditioning, please define your forward function in `ConditionalDiffusionGeneration/src/guided_diffusion/measurements.py`
     
@@ -75,7 +82,13 @@ create a conda environment named "CoNFiLD"
     |  |-- number of sensors
     |  |-- ...
     ```
-## Training Conditional Neural Field
+    
+## Training CoNFiLD from scratch
+
+### Download data
+* The data associated with this code can be downloaded [here](https://doi.org/10.5281/zenodo.14037782)
+  
+### Training Conditional Neural Field
 * Use `train.py` under `ConditionalNeuralField/scripts` directory
     ```bash
     python ConditionalNeuralField/scripts/train.py PATH/TO/YOUR/xxx.yaml
@@ -91,7 +104,8 @@ create a conda environment named "CoNFiLD"
         | 
         |-- coords.npy # query coordinates
         ```
-## Training Diffusion Model
+        
+### Training Diffusion Model
 * After the CNF is trained: 
     * Process the latents into square images with dimensions of the square equal to the latent vector length
     * Add a channel dimension after the batch dimension. The final shape should be $(B\: 1\: H\: W)$
@@ -111,9 +125,7 @@ create a conda environment named "CoNFiLD"
         | 
         |-- valid_data.npy # validation data
         ```
-## Download data & trained model
-* The data associated with this code can be downloaded [here](https://doi.org/10.5281/zenodo.14037782)
-* The trained model parameters associated with this code can be downloaded [here](https://zenodo.org/records/14058363)
+
 ## Issues?
 * If you have an issue in running the code please [raise an issue](https://github.com/jx-wang-s-group/CoNFiLD/issues)
 
@@ -127,6 +139,9 @@ If you find our work useful and relevant to your research, please cite:
     year={2024}
     }
 ``` 
+## Acknowledgement
+The diffusion model used in this work is based on [OpenAI's implementation](https://github.com/openai/guided-diffusion). The DPS part is based on [Diffusion Posterior Sampling for General Noisy Inverse Problems](https://github.com/DPS2022/diffusion-posterior-sampling)
+
 
 
 
