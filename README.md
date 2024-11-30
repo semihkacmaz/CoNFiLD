@@ -1,7 +1,7 @@
 # CoNFILD
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14058397.svg)](https://doi.org/10.5281/zenodo.14058397) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14037782.svg)](https://doi.org/10.5281/zenodo.14037782)
 
-This is the codebase for the paper [Du, P., Parikh, M.H., Fan, X., Liu, X.Y. and Wang, J.X., 2024. CoNFiLD: Conditional Neural Field Latent Diffusion Model Generating Spatiotemporal Turbulence. arXiv preprint arXiv:2403.05940.](https://arxiv.org/abs/2403.05940) (Accepted in *Nature Communications*)
+This is the codebase for the paper [Du, P., Parikh, M.H., Fan, X. et al. Conditional neural field latent diffusion model for generating spatiotemporal turbulence. *Nature Communications* 15, 10416 (2024)]([https://arxiv.org/abs/2403.05940](https://doi.org/10.1038/s41467-024-54712-1))
 
 <p align="center"><img src="figs/method.png" alt="structure" align="center" width="600px"></p>
 
