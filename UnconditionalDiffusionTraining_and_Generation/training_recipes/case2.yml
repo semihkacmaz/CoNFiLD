@@ -32,9 +32,9 @@ save_path: add/save/path/here
 microbatch: -1
 lr : 5.e-5
 ema_rate: "0.9999"
-log_interval: 1000
-save_interval: 10000
-lr_anneal_steps: 0
+log_interval: 1000 # How frequently it will log the results
+save_interval: 10000 # How frequently it will save the model
+lr_anneal_steps: 0 # Controls training loop
 
 log_path : /add/log/path/here
 train_data_path: /add/train_data/path/here
