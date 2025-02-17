@@ -31,8 +31,32 @@ create a conda environment named "CoNFiLD"
 * Run the following bash command
     ```bash
     set -o allexport && source .env && set +o allexport
+    
     ```
-  
+
+## Managing Local Configuration Files
+
+If you need to maintain different local versions of `Case*.yml` config files while preserving the original repository versions, follow these steps:
+
+1. After cloning the repository, mark the config files to be ignored using:
+   ```bash
+   find . -name "case*.yml" -type f | xargs git update-index --skip-worktree
+   ```
+
+2. You can now modify your local `Case*.yml` files without affecting the repository versions.
+
+3. To verify which files are being ignored:
+   ```bash
+   git ls-files -v | grep '^S'
+   ```
+
+4. If you need to track these files again later:
+   ```bash
+   find . -name "case*.yml" -type f | xargs git update-index --no-skip-worktree
+   ```
+
+> **Note:** This approach allows you to keep local modifications private while maintaining the original files in the repository.
+
 ## Using pretrained CoNFiLD
 
 ### Download pretrained model
