@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 absl-py==2.1.0
 astunparse==1.6.3
 blobfile==2.1.1
@@ -76,12 +75,3 @@ wrapt==1.16.0
 xformers==0.0.24
 zipp==3.17.0
 git+https://github.com/jx-wang-s-group/BasicUtility
-=======
-einops==0.7.0
-blobfile==2.1.1
-tensorboard==2.13.0
-tqdm==4.64.1
-PyYAML==6.0
-xformers==0.0.24
-git+https://github.com/jx-wang-s-group/BasicUtility
->>>>>>> d8f110e (Initial commit with proper .gitignore environment and training configs)

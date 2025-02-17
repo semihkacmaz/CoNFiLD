@@ -1,2 +1,28 @@
 .env
-__pycache__
+
+*.ipynb
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+*.pt
+*.npy
+
+# Ignore specific directories
+.ropeproject/
+help_ood_down/
+ConditionalNeuralField/CoNFiLD_data/
+Legacy/
+
+# Ignore all logs
+*logs/
+log.txt
+
+# Ignore all TensorBoard event files
+events.out.tfevents*
+
+# Ignore job submission scripts
+*.sh
+*.slurm

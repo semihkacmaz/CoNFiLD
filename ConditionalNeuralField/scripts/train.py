@@ -409,7 +409,7 @@ class trainer(object):
                     batch_coords = [i.to(rank) for i in batch_coords]
                 else:
                     batch_coords = batch_coords.to(rank)
-                batch_output = model(batch_coords, batch_latent)                
+                batch_output = model(batch_coords, batch_latent)
                 loss = criterion(batch_output, batch_fois)
                 optim_states.zero_grad()
                 loss.backward()
