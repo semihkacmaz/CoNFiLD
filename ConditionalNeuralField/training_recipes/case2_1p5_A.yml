@@ -27,7 +27,7 @@ dims: 2
 NF:
   name: SIRENAutodecoder_film
   in_coord_features: 2
-  out_features: 4
+  out_features: 3
   num_hidden_layers: 10
   hidden_features: 256
 
