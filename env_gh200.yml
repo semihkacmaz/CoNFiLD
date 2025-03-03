@@ -1,0 +1,14 @@
+name: CoNFiLD
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - mpi=1.0=openmpi
+  - mpi4py=3.1.4
+  - pip:
+      - -r requirements_pip_gh200.txt
