@@ -240,7 +240,7 @@ class CNF_inference:
         coords = coords.to(self.device)
 
         all_predictions = []
-        latent_indices = torch.tensor(latent_indices, dtype=torch.long)
+        latent_indices = torch.LongTensor(latent_indices)
 
         with torch.no_grad():
             for i in range(0, len(latent_indices), batch_size):
