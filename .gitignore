@@ -15,7 +15,7 @@ __pycache__/
 help_ood_down/
 ConditionalNeuralField/CoNFiLD_data/
 Legacy/
-Analysis/
+Analysis/**/*.[tp][nx][tg]
 
 # Ignore all logs
 *logs/
