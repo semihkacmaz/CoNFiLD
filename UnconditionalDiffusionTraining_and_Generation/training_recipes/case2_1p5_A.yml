@@ -1,0 +1,41 @@
+## inference specific args
+#model:
+batch_size: 16
+test_batch_size: 16
+
+time_length: 256
+latent_length: 256
+
+image_size: 256
+num_channels: 128
+num_res_blocks: 2
+num_heads: 4
+num_head_channels: 64
+attention_resolutions: "32,16,8"
+channel_mult: null
+
+ema_path:
+
+#diff:
+steps: 1000
+noise_schedule: "cosine"
+
+#data:
+max_val:
+min_val:
+
+cnf_case_file_path:
+
+save_path:
+
+## train specific args
+microbatch: -1
+lr: 5.e-5
+ema_rate: "0.9999"
+log_interval: 5000 # How frequently it will log the results
+save_interval: 5000 # How frequently it will save the model
+lr_anneal_steps: 0 # Controls training loop
+
+log_path:
+train_data_path:
+valid_data_path:
